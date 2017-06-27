@@ -7,7 +7,8 @@ export class Board extends React.Component {
     super();
     this.state = {
       squares: Array(9).fill(null),
-      xIsNext: true
+      xIsNext: true,
+      movesRemaining: 9
     }
   }
 
@@ -21,21 +22,31 @@ export class Board extends React.Component {
 
   handleClick(i) {
     const squaresCopy = this.state.squares.slice();
-    if (calculateWinner(squaresCopy) || squaresCopy[i]) {
+    if (calculateWinner(squaresCopy, this.state.movesRemaining) || squaresCopy[i]) {
       return;
     }
     squaresCopy[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({squares: squaresCopy, xIsNext: !this.state.xIsNext});
+    this.setState({
+      squares: squaresCopy,
+      xIsNext: !this.state.xIsNext,
+      movesRemaining: this.state.movesRemaining - 1
+    });
   }
 
   resetGame() {
-    this.setState({squares: Array(9).fill(null), xIsNext: true});
+    this.setState({
+      squares: Array(9).fill(null),
+      xIsNext: true,
+      movesRemaining: 9
+    });
   }
 
   render() {
-    const winner = calculateWinner(this.state.squares);
+    const winner = calculateWinner(this.state.squares, this.state.movesRemaining);
     let status;
-    if (winner) {
+    if (winner === 'stalemate') {
+      status = 'Stalemate! Try again';
+    } else if (winner) {
       status = 'Winner: ' + winner;
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
@@ -69,7 +80,7 @@ export class Board extends React.Component {
   }
 }
 
-function calculateWinner(squares) {
+function calculateWinner(squares, movesRemaining) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -80,6 +91,11 @@ function calculateWinner(squares) {
     [0, 4, 8],
     [2, 4, 6],
   ];
+
+  if (movesRemaining === 0) {
+    return 'stalemate';
+  }
+
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
