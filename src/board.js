@@ -28,6 +28,10 @@ export class Board extends React.Component {
     this.setState({squares: squaresCopy, xIsNext: !this.state.xIsNext});
   }
 
+  resetGame() {
+    this.setState({squares: Array(9).fill(null), xIsNext: true});
+  }
+
   render() {
     const winner = calculateWinner(this.state.squares);
     let status;
@@ -39,7 +43,12 @@ export class Board extends React.Component {
 
     return (
       <div>
-        <div className="status">{status}</div>
+        <div className="status">
+          {status}
+          <span className="resetGameBtn">
+            <button onClick={() => {this.resetGame()}}>Reset Game</button>
+          </span>
+        </div>
         <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}

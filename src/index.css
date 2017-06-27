@@ -45,6 +45,6 @@ ol, ul {
   flex-direction: row;
 }
 
-.game-info {
+.game-info, .resetGameBtn {
   margin-left: 20px;
 }
