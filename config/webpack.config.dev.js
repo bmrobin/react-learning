@@ -1,11 +1,12 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = {
   entry: {
     bundle: "./src/index.jsx"
   },
   output: {
-    path: __dirname + "/build",
+    path: __dirname + "/../build",
     filename: "static/js/[name].[hash:8].js",
   },
   module: {
@@ -42,7 +43,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: './public/index.html'
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ],
   stats: {
     modules: true,
@@ -51,5 +53,12 @@ module.exports = {
   resolve: {
     extensions: ['.jsx', '.js']
   },
-  devtool: 'source-map'
+  devtool: 'cheap-eval-source-map',
+  devServer: {
+    port: 9000,
+    compress: true,
+    contentBase: __dirname + '../build',
+    watchContentBase: true,
+    hot: true
+  }
 };

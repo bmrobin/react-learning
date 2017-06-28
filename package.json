@@ -18,12 +18,11 @@
     "html-webpack-plugin": "^2.29.0",
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.18.2",
-    "webpack": "^2.6.1"
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.5.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "webpack --config config/webpack.config.prod.js",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "webpack-dev-server --config config/webpack.config.dev.js --progress --colors",
+    "build": "webpack --config config/webpack.config.prod.js --progress --colors"
   }
 }

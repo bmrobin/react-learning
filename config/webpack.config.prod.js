@@ -41,7 +41,19 @@ module.exports = {
     // automatically inject <script> tag into HTML for webpack bundle file
     new HtmlWebpackPlugin({
       inject: true,
-      template: './public/index.html'
+      template: './public/index.html',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
     })
   ],
   stats: {
