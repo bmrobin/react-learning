@@ -14,7 +14,7 @@ module.exports = {
       {
         enforce: "pre",
         test: /\.jsx?$/,
-        include: __dirname + "/src",
+        exclude: /node_modules/,
         loader: "eslint-loader",
         options: {
           configFile: "./.eslintrc.json"
@@ -53,7 +53,7 @@ module.exports = {
   resolve: {
     extensions: ['.jsx', '.js']
   },
-  devtool: 'cheap-eval-source-map',
+  devtool: 'source-map',
   devServer: {
     port: 9000,
     compress: true,
