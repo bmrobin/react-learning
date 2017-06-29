@@ -3,63 +3,15 @@ import { Square } from './Square';
 
 export class Board extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-      squares: Array(9).fill(null),
-      xIsNext: true,
-      movesRemaining: 9
-    }
-  }
-
   renderSquare(i) {
     return (
-      <Square
-        value={this.state.squares[i]} onClick={() => this.handleClick(i)}
-      />
+      <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i)} />
     );
   }
 
-  handleClick(i) {
-    const squaresCopy = this.state.squares.slice();
-    if (calculateWinner(squaresCopy, this.state.movesRemaining) || squaresCopy[i]) {
-      return;
-    }
-    squaresCopy[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({
-      squares: squaresCopy,
-      xIsNext: !this.state.xIsNext,
-      movesRemaining: this.state.movesRemaining - 1
-    });
-  }
-
-  resetGame() {
-    this.setState({
-      squares: Array(9).fill(null),
-      xIsNext: true,
-      movesRemaining: 9
-    });
-  }
-
   render() {
-    const winner = calculateWinner(this.state.squares, this.state.movesRemaining);
-    let status;
-    if (winner === 'stalemate') {
-      status = 'Stalemate! Try again';
-    } else if (winner) {
-      status = 'Winner: ' + winner;
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    }
-
     return (
       <div>
-        <div className="status">
-          {status}
-          <span className="resetGameBtn">
-            <button onClick={() => {this.resetGame()}}>Reset Game</button>
-          </span>
-        </div>
         <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
@@ -77,31 +29,5 @@ export class Board extends React.Component {
         </div>
       </div>
     );
-  }
-}
-
-function calculateWinner(squares, movesRemaining) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-
-  if (movesRemaining === 0) {
-    return 'stalemate';
-  } else {
-    return null;
   }
 }
