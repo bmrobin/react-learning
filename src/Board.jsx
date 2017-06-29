@@ -92,15 +92,16 @@ function calculateWinner(squares, movesRemaining) {
     [2, 4, 6],
   ];
 
-  if (movesRemaining === 0) {
-    return 'stalemate';
-  }
-
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a];
     }
   }
-  return null;
+
+  if (movesRemaining === 0) {
+    return 'stalemate';
+  } else {
+    return null;
+  }
 }
