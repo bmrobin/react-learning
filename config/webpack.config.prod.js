@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -38,6 +39,11 @@ module.exports = {
     ]
   },
   plugins: [
+    // clean the build directory before building
+    new CleanWebpackPlugin(["build"], {
+      root: __dirname + "/../",
+      verbose: true
+    }),
     // automatically inject <script> tag into HTML for webpack bundle file
     new HtmlWebpackPlugin({
       inject: true,
