@@ -24,6 +24,7 @@
         "no-undef": "warn",
         "no-unreachable": "warn",
         "no-unused-vars": "warn",
+        "no-console": "warn",
         "constructor-super": "warn",
         "valid-typeof": "warn",
         "react/prop-types": "off"
